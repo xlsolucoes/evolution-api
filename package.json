@@ -5,11 +5,11 @@
   "main": "./dist/main.js",
   "type": "commonjs",
   "scripts": {
-    "build": "tsc --noEmit && tsup",
+    "build": "npm run db:generate && tsc --noEmit && tsup",
     "start": "tsx ./src/main.ts",
     "start:prod": "node dist/main",
     "start:azure": "node dist/main",
-    "postinstall": "npm run db:generate && npm run build",
+    "postinstall": "npm run build",
     "dev:server": "tsx watch ./src/main.ts",
     "test": "tsx watch ./test/all.test.ts",
     "lint": "eslint --fix --ext .ts src",
