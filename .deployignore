@@ -1,0 +1,47 @@
+# Keep dist folder for Azure deployment
+# This file tells Azure what to ignore during deployment
+# Unlike .gitignore, we need dist/ folder in Azure
+
+# Development files
+test/
+*.test.ts
+*.spec.ts
+.vscode/
+.idea/
+.nova/
+
+# Environment files (use Azure App Settings instead)
+.env
+.env.local
+.env.development
+.env.test
+
+# Instance data
+instances/*
+!instances/.gitkeep
+
+# Docker files
+docker-compose*.yaml
+Dockerfile*
+.dockerignore
+
+# Documentation
+AGENTS.md
+CLAUDE.md
+README.md
+CHANGELOG.md
+LICENSE
+
+# Git
+.git/
+.gitignore
+.gitmodules
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+temp/
+/store
+.DS_Store

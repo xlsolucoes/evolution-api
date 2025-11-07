@@ -74,9 +74,53 @@ npm run db:deploy
 
 ### Solução de Problemas
 
+#### Erro "tsx: not found"
+**Causa**: O Azure está tentando executar código TypeScript ao invés do código compilado.
+
+**Solução**:
+1. **Fazer build local** antes de fazer deploy:
+   ```bash
+   npm run build
+   ```
+
+2. **Garantir que a pasta `dist/` está sendo enviada** ao Azure:
+   - A pasta `dist/` NÃO deve estar no `.gitignore` para Azure
+   - Use `.deployignore` para controlar o que enviar ao Azure
+
+3. **Verificar que o `package.json` está correto**:
+   ```json
+   "scripts": {
+     "start": "node dist/main.js",
+     "start:prod": "node dist/main.js"
+   }
+   ```
+
+4. **NÃO use `postinstall`** que tenta fazer build no Azure (o tsx não estará disponível)
+
+#### Outros Problemas Comuns
+
 1. **Erro de conexão com banco**: Verifique a string de conexão e firewall
 2. **Timeout na inicialização**: Configure `WEBSITES_CONTAINER_START_TIME_LIMIT=1800`
 3. **Erro de memória**: Configure um plano de serviço adequado (B1 ou superior)
+4. **Prisma Client não gerado**: O startup.sh tentará gerar automaticamente
+
+### Workflow Recomendado para Deploy
+
+```bash
+# 1. Build local (OBRIGATÓRIO antes de fazer deploy)
+npm run build
+
+# 2. Testar localmente
+npm run start:prod
+
+# 3. Commit e push (certifique-se que dist/ está incluído)
+git add dist/
+git commit -m "build: update production build"
+git push azure main
+
+# 4. Verificar logs no Azure Portal
+az webapp log tail --name your-app-name --resource-group your-rg
+```
 
 ### Monitoramento
 
