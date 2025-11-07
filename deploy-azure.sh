@@ -46,4 +46,22 @@ echo "Installing production dependencies..."
 cd "$DEPLOYMENT_TARGET"
 npm ci --only=production --no-audit --no-fund
 
+# Generate Prisma Client
+echo "Generating Prisma Client..."
+if [ -z "$DATABASE_PROVIDER" ]; then
+  echo "WARNING: DATABASE_PROVIDER not set, defaulting to mysql"
+  export DATABASE_PROVIDER=mysql
+fi
+
+echo "Using DATABASE_PROVIDER: $DATABASE_PROVIDER"
+
+# Generate Prisma client using the correct schema
+if [ -f "prisma/${DATABASE_PROVIDER}-schema.prisma" ]; then
+  npx prisma generate --schema "prisma/${DATABASE_PROVIDER}-schema.prisma"
+  echo "✓ Prisma Client generated successfully"
+else
+  echo "ERROR: Schema file not found: prisma/${DATABASE_PROVIDER}-schema.prisma"
+  exit 1
+fi
+
 echo "=== Deployment completed successfully ==="

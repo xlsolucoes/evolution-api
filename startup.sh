@@ -34,14 +34,30 @@ fi
 
 # Generate Prisma client if needed
 echo "Checking Prisma client..."
-if [ ! -d "node_modules/@prisma/client" ] || [ ! -f "node_modules/@prisma/client/index.js" ]; then
-  echo "Generating Prisma client..."
-  npm run db:generate || {
-    echo "ERROR: Failed to generate Prisma client"
+if [ ! -d "node_modules/@prisma/client" ] || [ ! -f "node_modules/.prisma/client/index.js" ]; then
+  echo "Prisma client not found, generating..."
+  
+  # Set DATABASE_PROVIDER if not set
+  if [ -z "$DATABASE_PROVIDER" ]; then
+    echo "WARNING: DATABASE_PROVIDER not set, defaulting to mysql"
+    export DATABASE_PROVIDER=mysql
+  fi
+  
+  echo "Using DATABASE_PROVIDER: $DATABASE_PROVIDER"
+  
+  # Generate Prisma client
+  if [ -f "prisma/${DATABASE_PROVIDER}-schema.prisma" ]; then
+    npx prisma generate --schema "prisma/${DATABASE_PROVIDER}-schema.prisma" || {
+      echo "ERROR: Failed to generate Prisma client"
+      exit 1
+    }
+    echo "✓ Prisma client generated"
+  else
+    echo "ERROR: Schema file not found: prisma/${DATABASE_PROVIDER}-schema.prisma"
     exit 1
-  }
+  fi
 else
-  echo "Prisma client already exists, skipping generation"
+  echo "✓ Prisma client already exists"
 fi
 
 # Run database migrations
