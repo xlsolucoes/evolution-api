@@ -1,2 +1,4 @@
 [config]
-command = bash startup.sh
+SCM_DO_BUILD_DURING_DEPLOYMENT=false
+WEBSITE_NODE_DEFAULT_VERSION=24.11.0
+command = bash deploy-azure.sh
