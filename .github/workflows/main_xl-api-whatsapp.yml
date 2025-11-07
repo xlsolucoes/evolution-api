@@ -25,6 +25,7 @@ jobs:
 
       - name: Install and build
         run: |
+          export HUSKY=0
           npm ci
           export DATABASE_PROVIDER=postgresql
           npm run db:generate
@@ -33,6 +34,7 @@ jobs:
 
       - name: Clean for production
         run: |
+          export HUSKY=0
           rm -rf node_modules
           npm ci --production
 
