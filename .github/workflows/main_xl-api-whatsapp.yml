@@ -21,13 +21,27 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
+          node-version: '18.x'
+          cache: 'npm'
 
-      - name: npm install, build, and test
+      - name: Set environment variables for build
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          echo "DATABASE_PROVIDER=postgresql" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: npm ci --production=false
+
+      - name: Generate Prisma Client
+        run: npm run db:generate
+
+      - name: Build application
+        run: npm run build
+
+      - name: Clean up for deployment
+        run: |
+          rm -rf node_modules
+          npm ci --production --ignore-scripts
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -47,7 +61,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
+      - name: Set up Node.js for deployment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -62,4 +81,5 @@ jobs:
           app-name: 'xl-api-whatsapp'
           slot-name: 'Production'
           package: .
+          startup-command: 'node dist/main.js'
           
