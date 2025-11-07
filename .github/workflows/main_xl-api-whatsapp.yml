@@ -24,17 +24,19 @@ jobs:
           node-version: '24.x'
 
       - name: Install and build
+        env:
+          HUSKY: 0
+          DATABASE_PROVIDER: postgresql
         run: |
-          export HUSKY=0
           npm ci
-          export DATABASE_PROVIDER=postgresql
           npm run db:generate
           npm run build
           ls -la dist/
 
       - name: Clean for production
+        env:
+          HUSKY: 0
         run: |
-          export HUSKY=0
           rm -rf node_modules
           npm ci --production
 
