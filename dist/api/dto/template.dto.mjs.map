@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/api/dto/template.dto.ts"],"sourcesContent":["export class TemplateDto {\r\n  name: string;\r\n  category: string;\r\n  allowCategoryChange: boolean;\r\n  language: string;\r\n  components: any;\r\n  webhookUrl?: string;\r\n}\r\n"],"mappings":"AAAO,IAAMA,EAAN,KAAkB,CAOzB","names":["TemplateDto"]}

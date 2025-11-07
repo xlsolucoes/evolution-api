@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/api/dto/proxy.dto.ts"],"sourcesContent":["export class ProxyDto {\r\n  enabled?: boolean;\r\n  host: string;\r\n  port: string;\r\n  protocol: string;\r\n  username?: string;\r\n  password?: string;\r\n}\r\n"],"mappings":"AAAO,IAAMA,EAAN,KAAe,CAOtB","names":["ProxyDto"]}

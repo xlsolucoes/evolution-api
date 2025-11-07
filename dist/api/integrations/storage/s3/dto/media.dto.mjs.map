@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../../../src/api/integrations/storage/s3/dto/media.dto.ts"],"sourcesContent":["export class MediaDto {\r\n  id?: string;\r\n  type?: string;\r\n  messageId?: number;\r\n  expiry?: number;\r\n}\r\n"],"mappings":"AAAO,IAAMA,EAAN,KAAe,CAKtB","names":["MediaDto"]}

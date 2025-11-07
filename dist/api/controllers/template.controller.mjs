@@ -1,0 +1,2 @@
+var t=class{constructor(e){this.templateService=e}async createTemplate(e,r){return this.templateService.create(e,r)}async findTemplate(e){return this.templateService.find(e)}};export{t as TemplateController};
+//# sourceMappingURL=template.controller.mjs.map

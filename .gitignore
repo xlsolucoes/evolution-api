@@ -1,7 +1,7 @@
 # Repo
 Baileys
 # compiled output
-/dist
+# /dist - Commented for Azure deployment (dist folder needed in production)
 /node_modules
 
 /Docker/.env

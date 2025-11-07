@@ -1,0 +1,2 @@
+var r=Object.defineProperty;var t=Object.getOwnPropertyDescriptor;var l=Object.getOwnPropertyNames;var i=Object.prototype.hasOwnProperty;var c=(a,n)=>{for(var o in n)r(a,o,{get:n[o],enumerable:!0})},y=(a,n,o,s)=>{if(n&&typeof n=="object"||typeof n=="function")for(let g of l(n))!i.call(a,g)&&g!==o&&r(a,g,{get:()=>n[g],enumerable:!(s=t(n,g))||s.enumerable});return a};var b=a=>y(r({},"__esModule",{value:!0}),a);var h={};c(h,{TemplateDto:()=>e});module.exports=b(h);var e=class{};0&&(module.exports={TemplateDto});
+//# sourceMappingURL=template.dto.js.map
